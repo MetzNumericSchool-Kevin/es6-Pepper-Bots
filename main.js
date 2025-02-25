@@ -1,3 +1,5 @@
+const dom = document.getElementById('main');
+
 /**
  * Exercice 1
  * Template literals
@@ -5,15 +7,16 @@
 
 // Exercice 1.1 : Transforme la concaténation en interpolation de chaîne de caractères avec les backticks `
 function afficheAddresse(address) {
-  return (
-    "Votre adresse est : " +
-    address.street +
-    ", " +
-    address.city +
-    ", " +
-    address.country +
-    "."
-  );
+  const div = document.createElement("div")
+  div.innerHTML = `Votre adresse est : <br /> ${address.street}, <br /> ${address.city} <br /> ${address.country}`
+  div.style.color = "blue"
+  div.style.fontSize = "18px"
+  div.style.fontWeight = "800"
+
+  dom.appendChild(div);
+    return (
+      `Votre adresse est : \n${address.street} \n${address.city} \n${address.country}`
+    );
 }
 
 console.log("Exercice 1.1");
@@ -25,10 +28,16 @@ console.log(
   })
 );
 
+// afficheAddresse = "Votre adresse est : 'address.street, {address.city}, {address.country}."
+// console.log(address);
+
 // Exercice 1.2 : Utilise les chaînes multilignes avec les backticks ` pour afficher plus simplement le menu
 console.log("Exercice 1.2");
 console.log(
-  "Menu de la semaine :\n    - Pâte à tartine\n    - Hoagie\n    - Salade de pommes"
+  `Menu de la semaine :    
+    - Pâte à tartine  
+    - Hoagie
+    - Salade de pommes`
 );
 
 /**
@@ -39,20 +48,28 @@ console.log(
 const colors = ["Red", "Green", "Blue", "Yellow"];
 
 // Exercice 2.1 : Utilise la décomposition pour créer les constantes de couleurs plutôt que d'accéder aux indices
-const red = colors[0];
-const green = colors[1];
-const blue = colors[2];
-const yellow = colors[3];
+// const red = colors[0];
+// const green = colors[1];
+// const blue = colors[2];
+// const yellow = colors[3];
 
 console.log("Exercice 2.1");
-console.log(red, green, blue, yellow);
+// console.log(red, green, blue, yellow);
+
+// const [colors] = ["Red", "Green", "Blue", "Yellow"];
+// console.log(colors)
+
+const [red, green, blue, yellow] = ["Red", "Green", "Blue", "Yellow"];
+console.log(red, green, blue, yellow)
 
 // Exercice 2.2 : La même chose, mais en ignorant ici "Red" et "Yellow"
-const green2 = colors[1];
-const blue2 = colors[2];
+//const green2 = colors[1];
+//const blue2 = colors[2];
 
 console.log("Exercice 2.2");
-console.log(green2, blue2);
+
+const [red2, green2, blue2, yellow2] = ["Red", "Green", "Blue", "Yellow"];
+  console.log(green2, blue2);
 
 // ------ Version objet
 
@@ -78,20 +95,33 @@ const roman = {
   ],
 };
 
+
+
 // Exercices 2.3 : Décompose l'objet pour récupérer le titre, l'éditeur et le tome dans des constantes
-const title = roman.title;
-const editor = roman.editor;
-const tome = roman.tome;
+// const title = roman.title;
+// const editor = roman.editor;
+// const tome = roman.tome;
+
+const {title, editor, tome} = roman ;
 
 console.log("Exercice 2.3");
 console.log(title, editor, tome);
 
+
 // Exercice 2.4 : Décompose l'objet pour récupérer le nom du personnage principal,
 // le nom du premier personnage secondaire
 // et la voix Japonaise dans l'anime du second personnage secondaire
-const mainCharacterName = roman.mainCharacter.name;
-const secondCharacterName = roman.characters[0].name;
-const thirdCharacterJapaneseVoice = roman.characters[1].animeJapaneseVoice;
+// const mainCharacterName = roman.mainCharacter.name;
+// const secondCharacterName = roman.characters[0].name;
+// const thirdCharacterJapaneseVoice = roman.characters[1].animeJapaneseVoice;
+
+const {
+  mainCharacter : {name: mainCharacterName},
+  characters : [
+    {name : secondCharacterName},
+    {animeJapaneseVoice : thirdCharacterJapaneseVoice}
+  ]
+} = roman;
 
 console.log("Exercice 2.4");
 console.log(
@@ -107,11 +137,13 @@ let lastname = "Doe";
 
 // Exercice 2.5 : Faites l'inversion du prénom et nom avec la décomposition
 // plutôt qu'avoir une variable temporaire
-let temp = firstname;
-firstname = lastname;
-lastname = temp;
+// let temp = firstname;
+// firstname = lastname;
+// lastname = temp;
 
 console.log("Exercice 2.5");
+
+[firstname, lastname] = [lastname, firstname]
 console.log(firstname, lastname);
 
 // ------
@@ -123,8 +155,8 @@ const person = {
 };
 
 // Exercice 2.6 : Fais une décomposition du paramètre pour extraire directement le prénom et le nom
-function hello(person) {
-  console.log(`Bonjour ${person.firstname} ${person.lastname} !`);
+function hello({firstname, lastname}) {
+  console.log(`Bonjour ${firstname} ${lastname} !`);
 }
 
 console.log("Exercice 2.6");
@@ -138,20 +170,25 @@ hello(person);
 // Exercice 3.1 : Décompose le tableau colors pour ne garder dans le reste que les couleurs bleue et jaune
 const restOfColors = [];
 
-restOfColors.push(colors[2]);
-restOfColors.push(colors[3]);
+const [,, blue3, yellow3] = colors;
+
+restOfColors.push(blue3);
+restOfColors.push(yellow3);
+
 
 console.log("Exercice 3.1");
 console.log(restOfColors);
 
 // Exercice 3.2 : Décompose l'objet, de telle sorte à ce que le reste contienne seulement les clés
-// titre, editeur, tome, titre, auteur
+// titre, editeur, tome, auteur
 
 const roman2 = {};
 roman2.title = roman.title;
 roman2.editor = roman.editor;
 roman2.tome = roman.tome;
 roman2.auteur = roman.auteur;
+
+//const {title, editor, tome, auteur} = roman2;
 
 console.log("Exercice 3.2");
 console.log(roman2);
