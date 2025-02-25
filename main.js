@@ -177,6 +177,7 @@ restOfColors.push(yellow3);
 
 
 console.log("Exercice 3.1");
+
 console.log(restOfColors);
 
 // Exercice 3.2 : Décompose l'objet, de telle sorte à ce que le reste contienne seulement les clés
